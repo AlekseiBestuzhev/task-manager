@@ -45,5 +45,3 @@ Styles: CSS + Material UI
 To learn React, check out the [React documentation](https://react.dev/blog/2023/03/16/introducing-react-dev)
 
 To learn TypeScript, check out the [TypeScript documentation](https://www.typescriptlang.org/)
-
-To learn Vite, check out the [Vite documentation](https://vitejs.dev/)
