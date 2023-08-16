@@ -14,7 +14,7 @@ import {
 import { Menu } from "@mui/icons-material";
 import { Login } from "features/auth/ui/login/login";
 import "./App.css";
-import { TodolistsList } from "features/TodolistsList/TodolistsList";
+import { TodolistsList } from "features/todolists-list/todolists-list";
 import { ErrorSnackbar } from "common/components";
 import { useActions } from "common/hooks";
 import { selectIsLoggedIn } from "features/auth/model/auth.selectors";
@@ -46,6 +46,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <ErrorSnackbar />
+
         <AppBar position="static">
           <Toolbar>
             <IconButton edge="start" color="inherit" aria-label="menu">
@@ -60,6 +61,7 @@ function App() {
           </Toolbar>
           {status === "loading" && <LinearProgress />}
         </AppBar>
+
         <Container fixed>
           <Routes>
             <Route path={"/"} element={<TodolistsList />} />
