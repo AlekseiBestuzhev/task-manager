@@ -1,13 +1,15 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./app/App";
-import { store } from "app/store";
-import { Provider } from "react-redux";
+import { store } from 'app/providers/store/store';
+import { createRoot } from 'react-dom/client';
+import { HashRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { App } from 'app/ui';
+import React from 'react';
 
-const root = createRoot(document.getElementById("root") as HTMLElement);
+const root = createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+	<Provider store={store}>
+		<HashRouter>
+			<App />
+		</HashRouter>
+	</Provider>
 );
