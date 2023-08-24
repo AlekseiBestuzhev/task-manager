@@ -8,9 +8,10 @@ import React from 'react';
 
 type Props = {
 	logout: () => void;
+	title: string;
 };
 
-export const Header: FC<Props> = ({ logout }) => {
+export const Header: FC<Props> = ({ logout, title }) => {
 	const isLoggedIn = useSelector(selectIsLoggedIn);
 
 	const status = useSelector(selectAppStatus);
@@ -21,9 +22,9 @@ export const Header: FC<Props> = ({ logout }) => {
 				<IconButton edge="start" color="inherit" aria-label="menu">
 					<Menu />
 				</IconButton>
-				<Typography variant="h6">News</Typography>
+				<Typography variant="h6">{title}</Typography>
 				{isLoggedIn && (
-					<Button color="inherit" onClick={logout}>
+					<Button color="inherit" onClick={logout} sx={{ marginLeft: 'auto' }}>
 						Log out
 					</Button>
 				)}

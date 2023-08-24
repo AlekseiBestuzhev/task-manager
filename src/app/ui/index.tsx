@@ -1,9 +1,10 @@
 import { selectIsInitialized } from 'app/model/app.selectors';
 import { authThunks } from 'features/auth/model/auth.slice';
-import { CircularProgress, Container } from '@mui/material';
+import { Loading } from 'common/components/Loading/Loading';
 import { Header } from 'common/components/Header/Header';
 import { ErrorSnackbar } from 'common/components';
 import { AppRouter } from 'app/providers/router';
+import { Container } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useActions } from 'common/hooks';
 import React, { useEffect } from 'react';
@@ -18,21 +19,15 @@ export const App = () => {
 		initializeApp();
 	}, []);
 
-	if (!isInitialized) {
-		return (
-			<div style={{ position: 'fixed', top: '30%', textAlign: 'center', width: '100%' }}>
-				<CircularProgress />
-			</div>
-		);
-	}
-
-	return (
+	return isInitialized ? (
 		<div className="App">
 			<ErrorSnackbar />
-			<Header logout={logout} />
+			<Header logout={logout} title="List Manager" />
 			<Container fixed>
 				<AppRouter />
 			</Container>
 		</div>
+	) : (
+		<Loading />
 	);
 };
