@@ -1,10 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { AlertProps, Snackbar } from '@mui/material';
-import MuiAlert from '@mui/material/Alert';
-import { appActions } from 'app/app.slice';
 import { selectAppError } from 'app/model/app.selectors';
+import { AlertProps, Snackbar } from '@mui/material';
+import { appActions } from 'app/model/app.slice';
+import MuiAlert from '@mui/material/Alert';
 import { useActions } from 'common/hooks';
+import { useSelector } from 'react-redux';
+import React from 'react';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
 	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;

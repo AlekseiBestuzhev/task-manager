@@ -1,4 +1,4 @@
-import { AppDispatch } from 'app/providers/store/store';
+import { AppDispatch } from 'app/providers/store';
 import { appActions } from 'app/model/app.slice';
 import axios from 'axios';
 

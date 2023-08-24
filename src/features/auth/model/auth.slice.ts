@@ -1,9 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { appActions } from 'app/app.slice';
-import { clearTasksAndTodolists } from 'common/actions';
-import { ResultCode } from 'common/enums';
 import { createAppAsyncThunk, handleServerNetworkError } from 'common/utils';
 import { authAPI, LoginParamsType } from 'features/auth/api/auth.api';
+import { clearTasksAndTodolists } from 'common/actions';
+import { appActions } from 'app/model/app.slice';
+import { createSlice } from '@reduxjs/toolkit';
+import { ResultCode } from 'common/enums';
 
 const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType>('auth/login', async (arg, thunkAPI) => {
 	const { rejectWithValue } = thunkAPI;
