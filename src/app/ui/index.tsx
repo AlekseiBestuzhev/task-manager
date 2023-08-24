@@ -3,19 +3,19 @@ import { selectAppStatus, selectIsInitialized } from 'app/model/app.selectors';
 import { selectIsLoggedIn } from 'features/auth/model/auth.selectors';
 import { authThunks } from 'features/auth/model/auth.slice';
 import { ErrorSnackbar } from 'common/components';
-import { Route, Routes } from 'react-router-dom';
+import { AppRouter } from 'app/providers/router';
 import { Menu } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { useActions } from 'common/hooks';
 import React, { useEffect } from 'react';
-import { Login } from 'pages/login';
-import { Main } from 'pages/main';
 import './App.css';
 
 export const App = () => {
-	const status = useSelector(selectAppStatus);
 	const isInitialized = useSelector(selectIsInitialized);
+
 	const isLoggedIn = useSelector(selectIsLoggedIn);
+
+	const status = useSelector(selectAppStatus);
 
 	const { initializeApp, logout } = useActions(authThunks);
 
@@ -52,10 +52,7 @@ export const App = () => {
 			</AppBar>
 
 			<Container fixed>
-				<Routes>
-					<Route path={'/'} element={<Main />} />
-					<Route path={'/login'} element={<Login />} />
-				</Routes>
+				<AppRouter />
 			</Container>
 		</div>
 	);

@@ -1,36 +1,27 @@
 import { selectTodolists } from 'widgets/todolists/model/todolists.selectors';
 import { todolistsThunks } from 'widgets/todolists/model/todolists.slice';
-import { selectIsLoggedIn } from 'features/auth/model/auth.selectors';
 import { selectTasks } from 'widgets/tasks/model/tasks.selectors';
 import React, { useCallback, useEffect } from 'react';
 import { Todolist } from 'widgets/todolists/ui';
 import { AddItemForm } from 'common/components';
-import { Navigate } from 'react-router-dom';
 import { Grid, Paper } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useActions } from 'common/hooks';
 
 export const Main = () => {
 	const todolists = useSelector(selectTodolists);
+
 	const tasks = useSelector(selectTasks);
-	const isLoggedIn = useSelector(selectIsLoggedIn);
 
 	const { addTodolist, fetchTodolists } = useActions(todolistsThunks);
 
 	useEffect(() => {
-		if (!isLoggedIn) {
-			return;
-		}
 		fetchTodolists();
 	}, []);
 
 	const addTodolistCallback = useCallback((title: string) => {
 		return addTodolist(title).unwrap();
 	}, []);
-
-	if (!isLoggedIn) {
-		return <Navigate to={'/login'} />;
-	}
 
 	return (
 		<>
