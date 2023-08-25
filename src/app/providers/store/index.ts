@@ -1,5 +1,5 @@
-import { todolistsReducer } from 'widgets/todolists/model/todolists.slice';
-import { tasksReducer } from 'widgets/tasks/model/tasks.slice';
+import { todolistsReducer } from 'features/todolists-management/model/todolists.slice';
+import { tasksReducer } from 'features/tasks-management/model/tasks.slice';
 import { authSlice } from 'features/auth/model/auth.slice';
 import { configureStore } from '@reduxjs/toolkit';
 import { appReducer } from 'app/model/app.slice';

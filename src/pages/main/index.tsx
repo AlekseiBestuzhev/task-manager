@@ -1,12 +1,12 @@
-import { selectTodolists } from 'widgets/todolists/model/todolists.selectors';
-import { todolistsThunks } from 'widgets/todolists/model/todolists.slice';
-import { selectTasks } from 'widgets/tasks/model/tasks.selectors';
+import { selectTodolists } from 'features/todolists-management/model/todolists.selectors';
+import { todolistsThunks } from 'features/todolists-management/model/todolists.slice';
+import { selectTasks } from 'features/tasks-management/model/tasks.selectors';
 import React, { useCallback, useEffect } from 'react';
-import { Todolist } from 'widgets/todolists/ui';
-import { AddItemForm } from 'common/components';
+import { AddItemForm } from 'shared/components';
+import { Todolist } from 'widgets/todolist';
 import { Grid, Paper } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { useActions } from 'common/hooks';
+import { useActions } from 'shared/hooks';
 
 export const Main = () => {
 	const todolists = useSelector(selectTodolists);

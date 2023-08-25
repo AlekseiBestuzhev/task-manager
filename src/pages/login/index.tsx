@@ -1,5 +1,5 @@
-import { LoginForm } from 'features/auth/ui/LoginForm';
 import { FormLabel, Grid } from '@mui/material';
+import { LoginForm } from 'features/auth/ui';
 import React from 'react';
 
 export const Login = () => {
