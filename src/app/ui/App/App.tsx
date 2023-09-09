@@ -19,7 +19,9 @@ export const App = () => {
 		initializeApp();
 	}, []);
 
-	return isInitialized ? (
+	if (!isInitialized) return <Loading />;
+
+	return (
 		<div className="App">
 			<ErrorSnackbar />
 			<Header logout={logout} title="List Manager" />
@@ -27,7 +29,5 @@ export const App = () => {
 				<AppRouter />
 			</Container>
 		</div>
-	) : (
-		<Loading />
 	);
 };

@@ -1,40 +1,40 @@
 import { TodolistDomainType } from 'features/todolists-management/model/todolists.slice';
+import { selectTasks } from 'features/tasks-management/model/tasks.selectors';
 import { tasksThunks } from 'features/tasks-management/model/tasks.slice';
-import { TaskType } from 'features/tasks-management/api/tasks.api.types';
 import { FilterTasksButtons } from 'entities/filter-tasks-buttons';
-import React, { FC, memo, useCallback, useEffect } from 'react';
 import { TodolistTitle } from 'entities/todolist-title';
+import React, { FC, memo, useCallback } from 'react';
 import { AddItemForm } from 'shared/components';
+import { Grid, Paper } from '@mui/material';
 import { useActions } from 'shared/hooks';
+import { useSelector } from 'react-redux';
 import { Tasks } from 'widgets/todolist';
 
 type Props = {
 	todolist: TodolistDomainType;
-	tasks: TaskType[];
 };
 
-export const Todolist: FC<Props> = memo(({ todolist, tasks }) => {
-	const { fetchTasks, addTask } = useActions(tasksThunks);
+export const Todolist: FC<Props> = memo(({ todolist }) => {
+	const tasks = useSelector(selectTasks)[todolist.id];
 
-	useEffect(() => {
-		fetchTasks(todolist.id);
+	const { addTask } = useActions(tasksThunks);
+
+	const addTaskCallBack = useCallback((title: string) => {
+		return addTask({ title, todolistId: todolist.id }).unwrap();
 	}, []);
 
-	const addTaskCallBack = useCallback(
-		(title: string) => {
-			return addTask({ title, todolistId: todolist.id }).unwrap();
-		},
-		[todolist.id]
-	);
+	const disabled = todolist.entityStatus === 'loading';
 
 	return (
-		<>
-			<TodolistTitle todolist={todolist} />
-			<AddItemForm addItem={addTaskCallBack} disabled={todolist.entityStatus === 'loading'} />
-			<Tasks todolist={todolist} tasks={tasks} />
-			<div style={{ paddingTop: '10px' }}>
-				<FilterTasksButtons todolist={todolist} />
-			</div>
-		</>
+		<Grid item>
+			<Paper elevation={4} style={{ padding: '1.5rem 1rem' }}>
+				<TodolistTitle todolist={todolist} />
+				<AddItemForm addItem={addTaskCallBack} disabled={disabled} placeholder="Enter task title" />
+				<Tasks todolist={todolist} tasks={tasks} />
+				<div style={{ paddingTop: '10px' }}>
+					<FilterTasksButtons todolist={todolist} />
+				</div>
+			</Paper>
+		</Grid>
 	);
 });

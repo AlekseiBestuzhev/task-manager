@@ -4,6 +4,8 @@ import { clearTasksAndTodolists } from 'shared/actions';
 import { RequestStatusType } from 'app/model/app.slice';
 import { createAppAsyncThunk } from 'shared/utils';
 import { ResultCode } from 'shared/enums';
+import { tasksApi } from 'features/tasks-management/api/tasks.api';
+import { tasksThunks } from 'features/tasks-management/model/tasks.slice';
 
 const initialState: TodolistDomainType[] = [];
 
@@ -55,8 +57,11 @@ const slice = createSlice({
 
 // _____ thunks
 
-const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, void>('todo/fetchTodolists', async (_) => {
+const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, void>('todo/fetchTodolists', async (_, thunkAPI) => {
+	const { dispatch } = thunkAPI;
 	const res = await todolistsApi.getTodolists();
+	console.log('lists fetch');
+	res.data.forEach((list) => dispatch(tasksThunks.fetchTasks(list.id)));
 	return { todolists: res.data };
 });
 

@@ -1,62 +1,62 @@
-import { RejectValueType } from 'shared/utils/create-app-async-thunk';
-import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
-import { IconButton, TextField } from '@mui/material';
-import { AddBox } from '@mui/icons-material';
+import React, { ChangeEvent, FC, memo, useState } from 'react';
+import TextField from '@mui/material/TextField';
+import AddIcon from '@mui/icons-material/Add';
+import Button from '@mui/material/Button';
 
-type AddItemFormPropsType = {
-	addItem: (title: string) => Promise<unknown>;
+export type AddItemFormType = {
+	addItem: (title: string) => void;
+	placeholder?: string;
 	disabled?: boolean;
 };
 
-export const AddItemForm = React.memo(function ({ addItem, disabled = false }: AddItemFormPropsType) {
-	let [title, setTitle] = useState('');
-	let [error, setError] = useState<string | null>(null);
+export const AddItemForm: FC<AddItemFormType> = memo(({ addItem, placeholder, disabled }) => {
+	const [error, setError] = useState<boolean>(false);
+	const [title, setTitle] = useState<string>('');
 
-	const addItemHandler = () => {
-		if (title.trim() !== '') {
-			addItem(title)
-				.then(() => {
-					setTitle('');
-				})
-				.catch((err: RejectValueType) => {
-					if (err.data) {
-						const messages = err.data.messages;
-						setError(messages.length ? messages[0] : 'Some error occurred');
-					}
-				});
-		} else {
-			setError('Title is required');
-		}
-	};
-
-	const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+	const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
+		error && setError(false);
 		setTitle(e.currentTarget.value);
 	};
 
-	const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-		if (error !== null) {
-			setError(null);
+	const trimmedTitle = title.trim();
+
+	const addNewItem = () => {
+		if (trimmedTitle) {
+			addItem(trimmedTitle);
+		} else {
+			setError(true);
 		}
-		if (e.charCode === 13) {
-			addItemHandler();
-		}
+		setTitle('');
 	};
 
+	const onKeyDownAdd = (e: React.KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && addNewItem();
+
+	const inputLabelText = error ? 'Title is required' : placeholder;
+	const buttonColor = title ? 'primary' : 'inherit';
+
 	return (
-		<div>
+		<div className="add-item-form">
 			<TextField
+				id="outlined-basic"
+				label={inputLabelText}
 				variant="outlined"
-				disabled={disabled}
-				error={!!error}
+				size="small"
 				value={title}
-				onChange={onChangeHandler}
-				onKeyPress={onKeyPressHandler}
-				label="Title"
-				helperText={error}
+				onKeyDown={onKeyDownAdd}
+				onChange={onChangeInputHandler}
+				error={error}
+				disabled={disabled}
+				sx={{ flexGrow: '1' }}
 			/>
-			<IconButton color="primary" onClick={addItemHandler} disabled={disabled}>
-				<AddBox />
-			</IconButton>
+			<Button
+				variant="contained"
+				color={buttonColor}
+				onClick={addNewItem}
+				disabled={disabled}
+				sx={{ minWidth: '44px', width: '44px' }}
+			>
+				<AddIcon />
+			</Button>
 		</div>
 	);
 });

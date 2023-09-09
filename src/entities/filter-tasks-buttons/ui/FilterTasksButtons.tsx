@@ -10,33 +10,25 @@ type Props = {
 export const FilterTasksButtons: FC<Props> = ({ todolist }) => {
 	const { changeTodolistFilter } = useActions(todolistsActions);
 
-	const changeTasksFilterHandler = (filter: FilterValuesType) => {
+	const changeTasksFilterHandler = (filter: FilterValuesType) => () => {
 		changeTodolistFilter({ id: todolist.id, filter });
 	};
 
+	const filterAllColor = todolist.filter === 'all' ? 'primary' : 'inherit';
+	const filterActiveColor = todolist.filter === 'active' ? 'error' : 'inherit';
+	const filterCompletedColor = todolist.filter === 'completed' ? 'success' : 'inherit';
+
 	return (
-		<>
-			<Button
-				variant={todolist.filter === 'all' ? 'outlined' : 'text'}
-				onClick={() => changeTasksFilterHandler('all')}
-				color={'inherit'}
-			>
+		<div className="filter-block">
+			<Button variant="contained" size="small" onClick={changeTasksFilterHandler('all')} color={filterAllColor}>
 				All
 			</Button>
-			<Button
-				variant={todolist.filter === 'active' ? 'outlined' : 'text'}
-				onClick={() => changeTasksFilterHandler('active')}
-				color={'primary'}
-			>
+			<Button variant="contained" size="small" onClick={changeTasksFilterHandler('active')} color={filterActiveColor}>
 				Active
 			</Button>
-			<Button
-				variant={todolist.filter === 'completed' ? 'outlined' : 'text'}
-				onClick={() => changeTasksFilterHandler('completed')}
-				color={'secondary'}
-			>
+			<Button variant="contained" size="small" onClick={changeTasksFilterHandler('completed')} color={filterCompletedColor}>
 				Completed
 			</Button>
-		</>
+		</div>
 	);
 };
