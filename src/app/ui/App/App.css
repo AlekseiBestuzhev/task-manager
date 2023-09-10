@@ -1,5 +1,5 @@
 body {
-	background-color: #f4f4f4;
+	background-color: #f8f8f8;
 	padding-bottom: 2rem;
 	margin: 0;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
@@ -69,4 +69,8 @@ h3 {
 .editable-span.editable-span-disabled:hover {
 	color: #404040;
 	cursor: auto;
+}
+
+.no-task {
+	color: #9b9b9b;
 }
