@@ -9,9 +9,11 @@ import { useActions } from 'shared/hooks';
 import React, { useEffect } from 'react';
 import { Header } from 'widgets/header';
 import './App.css';
+import { selectIsLoggedIn } from 'features/auth/model/auth.selectors';
 
 export const App = () => {
 	const isInitialized = useSelector(selectIsInitialized);
+	const isLoggedIn = useSelector(selectIsLoggedIn);
 
 	const { initializeApp, logout } = useActions(authThunks);
 
@@ -22,11 +24,11 @@ export const App = () => {
 	if (!isInitialized) return <Loading />;
 
 	return (
-		<div className="App">
+		<div className="app">
 			<ErrorSnackbar />
-			<Header logout={logout} title="List Manager" />
+			<Header isLoggedIn={isLoggedIn} logout={logout} title="List Manager" />
 			<Container fixed>
-				<AppRouter />
+				<AppRouter isLoggedIn={isLoggedIn} />
 			</Container>
 		</div>
 	);

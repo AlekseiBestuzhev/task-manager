@@ -5,7 +5,7 @@ import { AddItemForm } from 'shared/components';
 import { useActions } from 'shared/hooks';
 import { Grid } from '@mui/material';
 
-export const Main = () => {
+const Main = () => {
 	const { addTodolist, fetchTodolists } = useActions(todolistsThunks);
 
 	useEffect(() => {
@@ -16,11 +16,9 @@ export const Main = () => {
 		return addTodolist(title).unwrap();
 	}, []);
 
-	console.log('main render');
-
 	return (
 		<>
-			<Grid container style={{ padding: '20px' }}>
+			<Grid container style={{ padding: ' 5px 20px' }}>
 				<AddItemForm addItem={addTodolistCallback} placeholder="Enter list tilte" />
 			</Grid>
 			<Grid container spacing={3}>
@@ -29,3 +27,5 @@ export const Main = () => {
 		</>
 	);
 };
+
+export default Main;

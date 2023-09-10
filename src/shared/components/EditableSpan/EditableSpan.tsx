@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, memo, useState } from 'react';
+import React, { CSSProperties, ChangeEvent, FC, memo, useState } from 'react';
 import { TextField } from '@mui/material';
 
 type EditableSpanPropsType = {
@@ -14,18 +14,25 @@ export const EditableSpan: FC<EditableSpanPropsType> = memo(({ value, onChange }
 		setEditMode(true);
 		setTitle(value);
 	};
+
 	const activateViewMode = () => {
 		if (title !== value) {
 			onChange(title);
 		}
 		setEditMode(false);
 	};
+
 	const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
 		setTitle(e.currentTarget.value);
 	};
 
+	const style: CSSProperties = {
+		minWidth: '170px',
+		width: '170px',
+	};
+
 	return editMode ? (
-		<TextField value={title} size="small" onChange={changeTitle} autoFocus onBlur={activateViewMode} />
+		<TextField value={title} size="small" onChange={changeTitle} autoFocus onBlur={activateViewMode} sx={style} />
 	) : (
 		<span className="editable-span" onClick={activateEditMode}>
 			{value}

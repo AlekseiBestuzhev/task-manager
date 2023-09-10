@@ -1,18 +1,27 @@
-import { selectIsLoggedIn } from 'features/auth/model/auth.selectors';
+import { Loading } from 'shared/components/Loading/Loading';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React, { FC, memo, lazy, Suspense } from 'react';
 import { Login } from 'pages/login';
-import { Main } from 'pages/main';
-import React from 'react';
 
-export const AppRouter = () => {
-	const isLoggedIn = useSelector(selectIsLoggedIn);
+const Main = lazy(() => import('pages/main'));
 
+type PropsType = {
+	isLoggedIn: boolean;
+};
+
+export const AppRouter: FC<PropsType> = memo(({ isLoggedIn }) => {
 	return (
 		<Routes>
 			{isLoggedIn ? (
 				<>
-					<Route path={'/'} element={<Main />} />
+					<Route
+						path={'/'}
+						element={
+							<Suspense fallback={<Loading />}>
+								<Main />
+							</Suspense>
+						}
+					/>
 					<Route path={'/login'} element={<Navigate to="/" />} />
 				</>
 			) : (
@@ -24,4 +33,4 @@ export const AppRouter = () => {
 			<Route path={'/*'} element={<h1>Page not found</h1>} />
 		</Routes>
 	);
-};
+});

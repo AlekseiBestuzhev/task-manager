@@ -1,4 +1,5 @@
 body {
+	background-color: #f4f4f4;
 	padding-bottom: 2rem;
 	margin: 0;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
@@ -7,13 +8,13 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-}
-
 p,
 h3 {
 	margin: 0;
+}
+
+.app {
+	padding-top: 64px;
 }
 
 .add-item-form {

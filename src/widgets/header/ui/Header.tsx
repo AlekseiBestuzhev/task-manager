@@ -1,23 +1,21 @@
 import { AppBar, Toolbar, IconButton, Typography, Button, LinearProgress } from '@mui/material';
-import { selectIsLoggedIn } from 'features/auth/model/auth.selectors';
 import { selectAppStatus } from 'app/model/app.selectors';
 import { Menu } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import React from 'react';
 
 type Props = {
+	isLoggedIn: boolean;
 	logout: () => void;
 	title: string;
 };
 
-export const Header: FC<Props> = ({ logout, title }) => {
-	const isLoggedIn = useSelector(selectIsLoggedIn);
-
+export const Header: FC<Props> = memo(({ isLoggedIn, logout, title }) => {
 	const status = useSelector(selectAppStatus);
 
 	return (
-		<AppBar position="static">
+		<AppBar position="fixed">
 			<Toolbar>
 				<IconButton edge="start" color="inherit" aria-label="menu">
 					<Menu />
@@ -32,4 +30,4 @@ export const Header: FC<Props> = ({ logout, title }) => {
 			{status === 'loading' && <LinearProgress />}
 		</AppBar>
 	);
-};
+});

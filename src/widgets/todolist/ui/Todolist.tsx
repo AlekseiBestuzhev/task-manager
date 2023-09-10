@@ -27,7 +27,7 @@ export const Todolist: FC<Props> = memo(({ todolist }) => {
 
 	return (
 		<Grid item>
-			<Paper elevation={4} style={{ padding: '1.5rem 1rem' }}>
+			<Paper elevation={2} style={{ padding: '1.5rem 1rem' }}>
 				<TodolistTitle todolist={todolist} />
 				<AddItemForm addItem={addTaskCallBack} disabled={disabled} placeholder="Enter task title" />
 				<Tasks todolist={todolist} tasks={tasks} />
