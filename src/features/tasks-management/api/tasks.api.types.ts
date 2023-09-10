@@ -1,6 +1,6 @@
 import { TaskPriorities, TaskStatuses } from 'shared/enums';
 
-export type TaskType = {
+export type TaskResponseType = {
 	description: string;
 	title: string;
 	status: TaskStatuses;
@@ -13,10 +13,14 @@ export type TaskType = {
 	addedDate: string;
 };
 
+export type TaskType = TaskResponseType & {
+	loading: boolean;
+};
+
 export type GetTasksResponse = {
 	error: string | null;
 	totalCount: number;
-	items: TaskType[];
+	items: TaskResponseType[];
 };
 
 export type AddTaskArgType = {
@@ -44,11 +48,4 @@ export type RemoveTaskArgType = {
 	taskId: string;
 };
 
-export type UpdateDomainTaskModelType = {
-	title?: string;
-	description?: string;
-	status?: TaskStatuses;
-	priority?: TaskPriorities;
-	startDate?: string;
-	deadline?: string;
-};
+export type UpdateDomainTaskModelType = Partial<UpdateTaskModelType>;

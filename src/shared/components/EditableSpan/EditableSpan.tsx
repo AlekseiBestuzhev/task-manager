@@ -1,12 +1,14 @@
 import React, { CSSProperties, ChangeEvent, FC, memo, useState } from 'react';
 import { TextField } from '@mui/material';
+import { clsx } from 'clsx';
 
 type EditableSpanPropsType = {
 	value: string;
 	onChange: (newValue: string) => Promise<any>;
+	disabled?: boolean;
 };
 
-export const EditableSpan: FC<EditableSpanPropsType> = memo(({ value, onChange }) => {
+export const EditableSpan: FC<EditableSpanPropsType> = memo(({ value, onChange, disabled }) => {
 	const [editMode, setEditMode] = useState(false);
 
 	const [error, setError] = useState(false);
@@ -14,8 +16,10 @@ export const EditableSpan: FC<EditableSpanPropsType> = memo(({ value, onChange }
 	const [title, setTitle] = useState(value);
 
 	const activateEditMode = () => {
-		setEditMode(true);
-		setTitle(value);
+		if (!disabled) {
+			setEditMode(true);
+			setTitle(value);
+		}
 	};
 
 	const activateViewMode = async () => {
@@ -40,10 +44,12 @@ export const EditableSpan: FC<EditableSpanPropsType> = memo(({ value, onChange }
 		width: '170px',
 	};
 
+	const spanClasses = clsx('editable-span', disabled && 'editable-span-disabled');
+
 	return editMode ? (
 		<TextField value={title} size="small" onChange={changeTitle} autoFocus onBlur={activateViewMode} sx={style} error={error} />
 	) : (
-		<span className="editable-span" onClick={activateEditMode}>
+		<span className={spanClasses} onClick={activateEditMode}>
 			{value}
 		</span>
 	);

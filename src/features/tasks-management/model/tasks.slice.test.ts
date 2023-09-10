@@ -17,6 +17,7 @@ beforeEach(() => {
 				addedDate: '',
 				order: 0,
 				priority: TaskPriorities.Low,
+				loading: false,
 			},
 			{
 				id: '2',
@@ -29,6 +30,7 @@ beforeEach(() => {
 				addedDate: '',
 				order: 0,
 				priority: TaskPriorities.Low,
+				loading: false,
 			},
 			{
 				id: '3',
@@ -41,6 +43,7 @@ beforeEach(() => {
 				addedDate: '',
 				order: 0,
 				priority: TaskPriorities.Low,
+				loading: false,
 			},
 		],
 		todolistId2: [
@@ -55,6 +58,7 @@ beforeEach(() => {
 				addedDate: '',
 				order: 0,
 				priority: TaskPriorities.Low,
+				loading: false,
 			},
 			{
 				id: '2',
@@ -67,6 +71,7 @@ beforeEach(() => {
 				addedDate: '',
 				order: 0,
 				priority: TaskPriorities.Low,
+				loading: false,
 			},
 			{
 				id: '3',
@@ -79,6 +84,7 @@ beforeEach(() => {
 				addedDate: '',
 				order: 0,
 				priority: TaskPriorities.Low,
+				loading: false,
 			},
 		],
 	};

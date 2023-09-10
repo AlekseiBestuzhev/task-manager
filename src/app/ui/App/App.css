@@ -30,15 +30,6 @@ h3 {
 	color: #404040;
 }
 
-.editable-span {
-	transition: 0.2s;
-	cursor: pointer;
-}
-
-.editable-span:hover {
-	color: #1976d2;
-}
-
 .filter-block {
 	display: flex;
 	justify-content: space-between;
@@ -51,8 +42,8 @@ h3 {
 	display: flex;
 }
 
-.task-done {
-	opacity: 0.8;
+.task-loading {
+	opacity: 0.5;
 }
 
 .task-with-icon {
@@ -60,4 +51,22 @@ h3 {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+}
+
+.editable-span {
+	transition: 0.2s;
+	cursor: pointer;
+}
+
+.editable-span:hover {
+	color: #1976d2;
+}
+
+.editable-span-disabled {
+	opacity: 0.5;
+}
+
+.editable-span.editable-span-disabled:hover {
+	color: #404040;
+	cursor: auto;
 }

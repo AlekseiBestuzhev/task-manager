@@ -1,11 +1,10 @@
 import { TodolistType, todolistsApi, UpdateTodolistTitleArgType } from 'features/todolists-management/api/todolists.api';
+import { tasksThunks } from 'features/tasks-management/model/tasks.slice';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { clearTasksAndTodolists } from 'shared/actions';
 import { RequestStatusType } from 'app/model/app.slice';
 import { createAppAsyncThunk } from 'shared/utils';
 import { ResultCode } from 'shared/enums';
-import { tasksApi } from 'features/tasks-management/api/tasks.api';
-import { tasksThunks } from 'features/tasks-management/model/tasks.slice';
 
 const initialState: TodolistDomainType[] = [];
 
