@@ -28,7 +28,7 @@ export const Task: FC<Props> = memo(({ task, todolistId }) => {
 	};
 
 	const changeTitleHandler = (title: string) => {
-		updateTask({ taskId: task.id, domainModel: { title }, todolistId });
+		return updateTask({ taskId: task.id, domainModel: { title }, todolistId }).unwrap();
 	};
 
 	const classes = `task ${task.status === TaskStatuses.Completed ? 'task-done' : ''}`;

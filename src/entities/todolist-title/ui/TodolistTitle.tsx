@@ -18,7 +18,7 @@ export const TodolistTitle: FC<Props> = ({ todolist }) => {
 
 	const changeTodolistTitleCallback = useCallback(
 		(title: string) => {
-			changeTodolistTitle({ id: todolist.id, title });
+			return changeTodolistTitle({ id: todolist.id, title }).unwrap();
 		},
 		[todolist.id]
 	);

@@ -4,54 +4,63 @@ import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 
 export type AddItemFormType = {
-	addItem: (title: string) => void;
+	addItem: (title: string) => Promise<any>;
 	placeholder?: string;
 	disabled?: boolean;
 };
 
 export const AddItemForm: FC<AddItemFormType> = memo(({ addItem, placeholder, disabled }) => {
-	const [error, setError] = useState<boolean>(false);
-	const [title, setTitle] = useState<string>('');
+	const [error, setError] = useState<string | null>(null);
 
-	const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-		error && setError(false);
-		setTitle(e.currentTarget.value);
-	};
+	const [title, setTitle] = useState('');
+
+	const labelText = error ? error : placeholder;
+
+	const buttonColor = title ? 'primary' : 'inherit';
 
 	const trimmedTitle = title.trim();
 
-	const addNewItem = () => {
-		if (trimmedTitle) {
-			addItem(trimmedTitle);
-		} else {
-			setError(true);
-		}
-		setTitle('');
+	const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
+		setTitle(e.currentTarget.value);
+		if (error) setError(null);
 	};
 
-	const onKeyDownAdd = (e: React.KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && addNewItem();
+	const addItemHandler = async () => {
+		if (trimmedTitle) {
+			try {
+				await addItem(title);
+				setTitle('');
+			} catch (err) {
+				setError('Invalid value');
+			}
+		} else {
+			setError('Title is required');
+		}
+	};
 
-	const inputLabelText = error ? 'Title is required' : placeholder;
-	const buttonColor = title ? 'primary' : 'inherit';
+	const onKeyDownAdd = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter') addItemHandler();
+		if (error) setError(null);
+	};
 
 	return (
 		<div className="add-item-form">
 			<TextField
 				id="outlined-basic"
-				label={inputLabelText}
+				label={labelText}
 				variant="outlined"
 				size="small"
 				value={title}
 				onKeyDown={onKeyDownAdd}
 				onChange={onChangeInputHandler}
-				error={error}
+				error={!!error}
 				disabled={disabled}
 				sx={{ flexGrow: '1' }}
 			/>
 			<Button
 				variant="contained"
 				color={buttonColor}
-				onClick={addNewItem}
+				onClick={addItemHandler}
 				disabled={disabled}
 				sx={{ minWidth: '44px', width: '44px' }}
 			>

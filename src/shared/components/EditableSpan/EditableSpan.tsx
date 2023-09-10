@@ -3,23 +3,32 @@ import { TextField } from '@mui/material';
 
 type EditableSpanPropsType = {
 	value: string;
-	onChange: (newValue: string) => void;
+	onChange: (newValue: string) => Promise<any>;
 };
 
 export const EditableSpan: FC<EditableSpanPropsType> = memo(({ value, onChange }) => {
-	let [editMode, setEditMode] = useState(false);
-	let [title, setTitle] = useState(value);
+	const [editMode, setEditMode] = useState(false);
+
+	const [error, setError] = useState(false);
+
+	const [title, setTitle] = useState(value);
 
 	const activateEditMode = () => {
 		setEditMode(true);
 		setTitle(value);
 	};
 
-	const activateViewMode = () => {
+	const activateViewMode = async () => {
 		if (title !== value) {
-			onChange(title);
+			try {
+				await onChange(title);
+				setEditMode(false);
+			} catch {
+				setError(true);
+			}
+		} else {
+			setEditMode(false);
 		}
-		setEditMode(false);
 	};
 
 	const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +41,7 @@ export const EditableSpan: FC<EditableSpanPropsType> = memo(({ value, onChange }
 	};
 
 	return editMode ? (
-		<TextField value={title} size="small" onChange={changeTitle} autoFocus onBlur={activateViewMode} sx={style} />
+		<TextField value={title} size="small" onChange={changeTitle} autoFocus onBlur={activateViewMode} sx={style} error={error} />
 	) : (
 		<span className="editable-span" onClick={activateEditMode}>
 			{value}

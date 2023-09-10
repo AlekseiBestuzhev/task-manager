@@ -70,7 +70,7 @@ const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, string>('tod
 	if (res.data.resultCode === ResultCode.Success) {
 		return { todolist: res.data.data.item };
 	} else {
-		return rejectWithValue({ data: res.data, showGlobalError: false });
+		return rejectWithValue({ data: res.data, showGlobalError: true });
 	}
 });
 
