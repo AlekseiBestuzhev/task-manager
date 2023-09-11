@@ -1,10 +1,13 @@
+import { selectTodolists } from 'features/todolists-management/model/todolists.selectors';
 import { todolistsThunks } from 'features/todolists-management/model/todolists.slice';
-import { TodolistList } from './TodolistList/TodolistList';
-import React, { useEffect } from 'react';
+import { Todolist } from 'widgets/todolist';
 import { useActions } from 'shared/hooks';
-import { Grid } from '@mui/material';
+import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
 
 const Main = () => {
+	const todolists = useSelector(selectTodolists);
+
 	const { fetchTodolists } = useActions(todolistsThunks);
 
 	useEffect(() => {
@@ -12,9 +15,11 @@ const Main = () => {
 	}, []);
 
 	return (
-		<Grid container spacing={3}>
-			<TodolistList />
-		</Grid>
+		<>
+			{todolists?.map((tl) => (
+				<Todolist key={tl.id} todolist={tl} />
+			))}
+		</>
 	);
 };
 

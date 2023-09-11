@@ -21,12 +21,12 @@ export const Header: FC<Props> = memo(({ isLoggedIn, logout, title, openModal })
 				<IconButton edge="start" color="inherit" aria-label="menu">
 					<Menu />
 				</IconButton>
-				<Typography variant="h6" sx={{ paddingInline: '3rem' }}>
+				<Typography variant="h6" className="app-title">
 					{title}
 				</Typography>
 				{isLoggedIn && (
 					<>
-						<Button variant="outlined" color="inherit" onClick={openModal}>
+						<Button variant="outlined" color="inherit" onClick={openModal} sx={{ marginLeft: '3rem' }}>
 							Create List
 						</Button>
 						<Button color="inherit" onClick={logout} sx={{ marginLeft: 'auto' }}>

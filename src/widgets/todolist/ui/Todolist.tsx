@@ -5,10 +5,10 @@ import { FilterTasksButtons } from 'entities/filter-tasks-buttons';
 import { TodolistTitle } from 'entities/todolist-title';
 import React, { FC, memo, useCallback } from 'react';
 import { AddItemForm } from 'shared/components';
-import { Grid, Paper } from '@mui/material';
 import { useActions } from 'shared/hooks';
 import { useSelector } from 'react-redux';
 import { Tasks } from 'widgets/todolist';
+import { Paper } from '@mui/material';
 
 type Props = {
 	todolist: TodolistDomainType;
@@ -26,7 +26,7 @@ export const Todolist: FC<Props> = memo(({ todolist }) => {
 	const disabled = todolist.entityStatus === 'loading';
 
 	return (
-		<Grid item>
+		<div>
 			<Paper elevation={2} style={{ padding: '1.5rem 1rem' }}>
 				<TodolistTitle todolist={todolist} />
 				<AddItemForm addItem={addTaskCallBack} disabled={disabled} placeholder="Enter task title" className="padding-block" />
@@ -35,6 +35,6 @@ export const Todolist: FC<Props> = memo(({ todolist }) => {
 					<FilterTasksButtons todolist={todolist} />
 				</div>
 			</Paper>
-		</Grid>
+		</div>
 	);
 });
