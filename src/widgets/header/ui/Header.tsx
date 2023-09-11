@@ -9,9 +9,10 @@ type Props = {
 	isLoggedIn: boolean;
 	logout: () => void;
 	title: string;
+	openModal: () => void;
 };
 
-export const Header: FC<Props> = memo(({ isLoggedIn, logout, title }) => {
+export const Header: FC<Props> = memo(({ isLoggedIn, logout, title, openModal }) => {
 	const status = useSelector(selectAppStatus);
 
 	return (
@@ -20,11 +21,18 @@ export const Header: FC<Props> = memo(({ isLoggedIn, logout, title }) => {
 				<IconButton edge="start" color="inherit" aria-label="menu">
 					<Menu />
 				</IconButton>
-				<Typography variant="h6">{title}</Typography>
+				<Typography variant="h6" sx={{ paddingInline: '3rem' }}>
+					{title}
+				</Typography>
 				{isLoggedIn && (
-					<Button color="inherit" onClick={logout} sx={{ marginLeft: 'auto' }}>
-						Log out
-					</Button>
+					<>
+						<Button variant="outlined" color="inherit" onClick={openModal}>
+							Create List
+						</Button>
+						<Button color="inherit" onClick={logout} sx={{ marginLeft: 'auto' }}>
+							Log out
+						</Button>
+					</>
 				)}
 			</Toolbar>
 			{status === 'loading' && <LinearProgress />}

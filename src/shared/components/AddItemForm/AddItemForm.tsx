@@ -2,14 +2,17 @@ import React, { ChangeEvent, FC, memo, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
+import clsx from 'clsx';
 
 export type AddItemFormType = {
 	addItem: (title: string) => Promise<any>;
 	placeholder?: string;
 	disabled?: boolean;
+	closeHandler?: () => void;
+	className?: string;
 };
 
-export const AddItemForm: FC<AddItemFormType> = memo(({ addItem, placeholder, disabled }) => {
+export const AddItemForm: FC<AddItemFormType> = memo(({ addItem, placeholder, disabled, closeHandler, className }) => {
 	const [error, setError] = useState<string | null>(null);
 
 	const [title, setTitle] = useState('');
@@ -30,6 +33,7 @@ export const AddItemForm: FC<AddItemFormType> = memo(({ addItem, placeholder, di
 			try {
 				await addItem(title);
 				setTitle('');
+				if (closeHandler) closeHandler();
 			} catch (err) {
 				setError('Invalid value');
 			}
@@ -43,8 +47,10 @@ export const AddItemForm: FC<AddItemFormType> = memo(({ addItem, placeholder, di
 		if (error) setError(null);
 	};
 
+	const classes = clsx('add-item-form', className);
+
 	return (
-		<div className="add-item-form">
+		<div className={classes}>
 			<TextField
 				id="outlined-basic"
 				label={labelText}
