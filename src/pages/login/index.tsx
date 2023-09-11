@@ -4,8 +4,8 @@ import React from 'react';
 
 export const Login = () => {
 	return (
-		<Grid container justifyContent="center" sx={{ marginTop: '50px' }}>
-			<Grid item xs={4}>
+		<div className="login-container">
+			<Grid item xs={4} sx={{ maxWidth: '450px' }}>
 				<FormLabel>
 					<p>
 						To log in get registered{' '}
@@ -20,6 +20,6 @@ export const Login = () => {
 				</FormLabel>
 				<LoginForm />
 			</Grid>
-		</Grid>
+		</div>
 	);
 };

@@ -10,15 +10,16 @@ type Props = {
 	logout: () => void;
 	title: string;
 	openModal: () => void;
+	openSidebar: () => void;
 };
 
-export const Header: FC<Props> = memo(({ isLoggedIn, logout, title, openModal }) => {
+export const Header: FC<Props> = memo(({ isLoggedIn, logout, title, openModal, openSidebar }) => {
 	const status = useSelector(selectAppStatus);
 
 	return (
 		<AppBar position="fixed">
 			<Toolbar>
-				<IconButton edge="start" color="inherit" aria-label="menu">
+				<IconButton edge="start" color="inherit" aria-label="menu" onClick={openSidebar}>
 					<Menu />
 				</IconButton>
 				<Typography variant="h6" className="app-title">

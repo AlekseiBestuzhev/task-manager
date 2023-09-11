@@ -15,11 +15,11 @@ const Main = () => {
 	}, []);
 
 	return (
-		<>
+		<div className="lists-container">
 			{todolists?.map((tl) => (
 				<Todolist key={tl.id} todolist={tl} />
 			))}
-		</>
+		</div>
 	);
 };
 
