@@ -202,3 +202,16 @@ h3 {
 	color: #404040;
 	cursor: auto;
 }
+
+.task-info {
+	display: flex;
+	flex-direction: column;
+	row-gap: 12px;
+	padding-top: 24px;
+}
+
+.task-buttons {
+	display: flex;
+	justify-content: space-between;
+	padding-top: 24px;
+}

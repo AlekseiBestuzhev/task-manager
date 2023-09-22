@@ -1,4 +1,4 @@
-import React, { CSSProperties, ChangeEvent, FC, memo, useState } from 'react';
+import React, { ChangeEvent, FC, memo, useState } from 'react';
 import { TextField } from '@mui/material';
 import { clsx } from 'clsx';
 
@@ -39,15 +39,10 @@ export const EditableSpan: FC<EditableSpanPropsType> = memo(({ value, onChange, 
 		setTitle(e.currentTarget.value);
 	};
 
-	const style: CSSProperties = {
-		minWidth: '170px',
-		width: '170px',
-	};
-
 	const spanClasses = clsx('editable-span', disabled && 'editable-span-disabled');
 
 	return editMode ? (
-		<TextField value={title} size="small" onChange={changeTitle} autoFocus onBlur={activateViewMode} sx={style} error={error} />
+		<TextField value={title} size="small" onChange={changeTitle} autoFocus onBlur={activateViewMode} error={error} />
 	) : (
 		<span className={spanClasses} onClick={activateEditMode}>
 			{value}
