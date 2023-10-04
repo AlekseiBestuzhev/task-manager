@@ -107,15 +107,24 @@ h3 {
 
 .modal-header {
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
+	justify-content: space-between;
 	padding: 6px 12px;
 	background-color: #eeeeee;
 	border-bottom: 1px solid #c9c9c9;
 }
 
 .modal-content {
-	padding: 48px;
+	padding: 36px;
+}
+
+.select {
+	width: 180px;
+}
+
+.select__label {
+	background-color: #fff;
+	padding: 0 6px 0 0;
 }
 
 /* ___ todolist */
@@ -207,7 +216,18 @@ h3 {
 	display: flex;
 	flex-direction: column;
 	row-gap: 12px;
-	padding-top: 24px;
+}
+
+.task-info__created {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 12px;
+}
+
+.task-info__select-group {
+	display: flex;
+	flex-wrap: wrap;
+	column-gap: 24px;
 }
 
 .task-buttons {
