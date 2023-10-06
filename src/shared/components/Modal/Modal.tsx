@@ -11,7 +11,7 @@ type Props = {
 
 export const Modal: FC<Props> = ({ onClose, open, children, title }) => {
 	return (
-		<Dialog onClose={onClose} open={open} sx={{ padding: '12px' }}>
+		<Dialog onClose={onClose} open={open}>
 			<div className="modal-header">
 				<Typography variant="h5">{title}</Typography>
 				<IconButton color="inherit" aria-label="close" onClick={onClose}>

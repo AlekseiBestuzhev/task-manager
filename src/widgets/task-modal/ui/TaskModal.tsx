@@ -21,10 +21,6 @@ type Props = {
 export const TaskModal: FC<Props> = ({ onClose, open, title, task }) => {
 	return (
 		<Modal onClose={onClose} open={open} title={title}>
-			{/* <p>
-				Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo sequi eveniet officiis commodi suscipit, nam in optio
-				nesciunt placeat beatae earum fuga minima tenetur voluptates quis esse veniam debitis quibusdam!
-			</p> */}
 			<form className="task-info">
 				<div className="task-info__created">
 					<span>Creted:</span> <span>{new Date(task.addedDate).toLocaleString()}</span>
@@ -42,10 +38,10 @@ export const TaskModal: FC<Props> = ({ onClose, open, title, task }) => {
 						</Select>
 					</FormControl>
 					<FormControl className="select">
-						<InputLabel id="demo-simple-select-label" className="select__label">
+						<InputLabel id="priority-select-label" className="select__label">
 							Priority
 						</InputLabel>
-						<Select labelId="demo-simple-select-label" id="demo-simple-select" value={task.priority} label="Age">
+						<Select labelId="priority-select-label" id="priority-select" value={task.priority} label="Age">
 							<MenuItem value={10}>Ten</MenuItem>
 							<MenuItem value={20}>Twenty</MenuItem>
 							<MenuItem value={30}>Thirty</MenuItem>

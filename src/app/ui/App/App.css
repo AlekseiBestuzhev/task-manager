@@ -124,7 +124,15 @@ h3 {
 
 .select__label {
 	background-color: #fff;
-	padding: 0 6px 0 0;
+	padding: 0 8px 0 0;
+}
+
+.modal-content .css-4jnixx-MuiStack-root {
+	padding-top: 0;
+}
+
+.modal-content .css-4jnixx-MuiStack-root > :not(style) ~ :not(style) {
+	margin-top: 12px;
 }
 
 /* ___ todolist */
