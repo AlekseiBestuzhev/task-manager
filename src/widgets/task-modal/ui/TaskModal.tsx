@@ -1,57 +1,30 @@
-import { TaskResponseType, TaskType, UpdateDomainTaskModelType } from 'features/tasks-management/api/tasks.api.types';
-import { Button, TextField, Typography } from '@mui/material';
-import { Modal } from 'shared/components';
-import React, { FC } from 'react';
+import { TaskType, UpdateDomainTaskModelType } from 'features/tasks-management/api/tasks.api.types';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import FormControl from '@mui/material/FormControl';
+import { Button, TextField } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { useFormik } from 'formik';
-import { useActions } from 'shared/hooks';
-import { tasksThunks } from 'features/tasks-management/model/tasks.slice';
+import { Modal } from 'shared/components';
+import { useTask } from '../lib/useTask';
+import React, { FC } from 'react';
 import dayjs from 'dayjs';
 
 type Props = {
    onClose: () => void;
    open: boolean;
    task: TaskType;
+   onSubmit: (values: UpdateDomainTaskModelType) => void;
 };
 
-type TaskForm = Pick<TaskResponseType, 'title' | 'status' | 'priority' | 'description'> & {
-   startDate: any;
-   deadline: any;
-};
+export const TaskModal: FC<Props> = ({ onClose, open, task, onSubmit }) => {
+   const { handleSubmit, getFieldProps, setFieldValue, touched, errors } = useTask(task, onSubmit);
 
-export const TaskModal: FC<Props> = ({ onClose, open, task }) => {
-   const { updateTask } = useActions(tasksThunks);
-
-   const { handleSubmit, getFieldProps, setFieldValue } = useFormik<TaskForm>({
-      initialValues: {
-         title: task.title,
-         status: task.status,
-         priority: task.priority,
-         startDate: task.startDate ? dayjs(new Date(task.startDate)) : null,
-         deadline: task.deadline ? dayjs(new Date(task.deadline)) : null,
-         description: task.description ?? '',
-      },
-      onSubmit: (values) => {
-         const toUpdate: UpdateDomainTaskModelType = {
-            title: values.title,
-            status: values.status,
-            priority: values.priority,
-            startDate: values.startDate?.toISOString(),
-            deadline: values.deadline?.toISOString(),
-            description: values.description,
-         };
-         console.log(toUpdate);
-
-         updateTask({ taskId: task.id, domainModel: toUpdate, todolistId: task.todoListId });
-      },
-   });
+   const titleError = !!(touched.title && errors.title);
+   const titleLabel = titleError ? errors.title : 'Task title';
 
    return (
       <Modal onClose={onClose} open={open} title={task.title}>
@@ -59,7 +32,7 @@ export const TaskModal: FC<Props> = ({ onClose, open, task }) => {
             <div className="task-form__created">
                <span>Creted:</span> <span>{new Date(task.addedDate).toLocaleString()}</span>
             </div>
-            <TextField label="Task title" {...getFieldProps('title')} />
+            <TextField label={titleLabel} error={titleError} {...getFieldProps('title')} />
             <div className="task-form__select-group select-group">
                <FormControl className="select-group__select select">
                   <InputLabel id="demo-simple-select-label" className="select__label">
