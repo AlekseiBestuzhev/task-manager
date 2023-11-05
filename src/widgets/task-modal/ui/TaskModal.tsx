@@ -1,4 +1,4 @@
-import { TaskType } from 'features/tasks-management/api/tasks.api.types';
+import { TaskResponseType, TaskType, UpdateDomainTaskModelType } from 'features/tasks-management/api/tasks.api.types';
 import { Button, TextField, Typography } from '@mui/material';
 import { Modal } from 'shared/components';
 import React, { FC } from 'react';
@@ -9,9 +9,11 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import { useFormik } from 'formik';
-import { TaskStatuses } from 'shared/enums';
+import { useActions } from 'shared/hooks';
+import { tasksThunks } from 'features/tasks-management/model/tasks.slice';
+import dayjs from 'dayjs';
 
 type Props = {
    onClose: () => void;
@@ -19,18 +21,36 @@ type Props = {
    task: TaskType;
 };
 
-type TaskForm = {
-   title: string;
-   status: TaskStatuses;
+type TaskForm = Pick<TaskResponseType, 'title' | 'status' | 'priority' | 'description'> & {
+   startDate: any;
+   deadline: any;
 };
 
 export const TaskModal: FC<Props> = ({ onClose, open, task }) => {
-   const { handleSubmit, getFieldProps } = useFormik<TaskForm>({
+   const { updateTask } = useActions(tasksThunks);
+
+   const { handleSubmit, getFieldProps, setFieldValue } = useFormik<TaskForm>({
       initialValues: {
          title: task.title,
          status: task.status,
+         priority: task.priority,
+         startDate: task.startDate ? dayjs(new Date(task.startDate)) : null,
+         deadline: task.deadline ? dayjs(new Date(task.deadline)) : null,
+         description: task.description ?? '',
       },
-      onSubmit: () => {},
+      onSubmit: (values) => {
+         const toUpdate: UpdateDomainTaskModelType = {
+            title: values.title,
+            status: values.status,
+            priority: values.priority,
+            startDate: values.startDate?.toISOString(),
+            deadline: values.deadline?.toISOString(),
+            description: values.description,
+         };
+         console.log(toUpdate);
+
+         updateTask({ taskId: task.id, domainModel: toUpdate, todolistId: task.todoListId });
+      },
    });
 
    return (
@@ -56,27 +76,45 @@ export const TaskModal: FC<Props> = ({ onClose, open, task }) => {
                   <InputLabel id="priority-select-label" className="select__label">
                      Priority
                   </InputLabel>
-                  <Select labelId="priority-select-label" id="priority-select" value={task.priority}>
-                     <MenuItem value={10}>Ten</MenuItem>
-                     <MenuItem value={20}>Twenty</MenuItem>
-                     <MenuItem value={30}>Thirty</MenuItem>
+                  <Select labelId="priority-select-label" id="priority-select" {...getFieldProps('priority')}>
+                     <MenuItem value={0}>Low</MenuItem>
+                     <MenuItem value={1}>Middle</MenuItem>
+                     <MenuItem value={2}>Hight</MenuItem>
+                     <MenuItem value={3}>Urgently</MenuItem>
+                     <MenuItem value={4}>Later</MenuItem>
                   </Select>
                </FormControl>
             </div>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                <DemoContainer components={['DatePicker', 'DatePicker']}>
                   <div className="task-form__dates dates">
-                     <DatePicker label="Start date" value={task.startDate} className="dates__start" />
-                     <DatePicker label="Deadline" value={task.deadline} className="dates__deadline" />
+                     <DatePicker
+                        label="Start date"
+                        className="dates__start"
+                        {...getFieldProps('startDate')}
+                        onChange={(value) => {
+                           setFieldValue('startDate', dayjs(new Date(value)));
+                        }}
+                     />
+                     <DatePicker
+                        label="Deadline"
+                        className="dates__deadline"
+                        {...getFieldProps('deadline')}
+                        onChange={(value) => {
+                           setFieldValue('deadline', dayjs(new Date(value)));
+                        }}
+                     />
                   </div>
                </DemoContainer>
             </LocalizationProvider>
-            <TextField value={task.description} label="Description" multiline />
+            <TextField label="Description" multiline {...getFieldProps('description')} />
             <div className="task-form__buttons">
                <Button variant="contained" color="inherit" onClick={onClose}>
                   Cancel
                </Button>
-               <Button variant="contained">Apply</Button>
+               <Button variant="contained" type="submit">
+                  Apply
+               </Button>
             </div>
          </form>
       </Modal>
