@@ -6,6 +6,8 @@
 
 React + TypeScript SPA 🚀
 
+> [Task Manager](https://alekseibestuzhev.github.io/task-manager/) - web application
+
 <hr>
 
 ## Description
