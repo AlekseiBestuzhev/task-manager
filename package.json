@@ -9,6 +9,7 @@
 	"private": true,
 	"homepage": "https://alekseibestuzhev.github.io/task-manager",
 	"dependencies": {
+		"@formkit/auto-animate": "^0.8.1",
 		"@mui/x-date-pickers": "^6.16.1",
 		"@reduxjs/toolkit": "^1.9.3",
 		"axios": "^1.3.4",

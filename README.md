@@ -29,6 +29,7 @@ Styles: CSS + Material UI
 - **clsx**
 - **dayjs**
 - **formik**
+- **formkit/auto-animate**
 - **gh-pages**
 - **jest**
 - **prettier**
